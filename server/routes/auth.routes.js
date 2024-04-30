@@ -27,17 +27,7 @@ router.post('/registration',
         const user = new User({email, password:hashPassword})
         await user.save()
         return res.json({message:`User was created`})
-        const token = jwt.sign({id:user.id}, config.get("secretKey"), {expiresIn:"2h"})
-        return res.json({
-            token,
-            user: {
-                id: user.id,
-                email: user.email,
-                discSpace: user.discSpace,
-                usedSpace: user.usedSpace,
-                avatar: user.avatar
-            }
-        })
+        
     } catch (e) {
         console.log(e)
         res.send({message:'Server error'})
@@ -56,6 +46,17 @@ router.post('/login',
         if (!isPassValid) {
             res.status(400).json({message:`Invalid password`})
         }
+        const token = jwt.sign({id:user.id}, config.get("secretKey"), {expiresIn:"2h"})
+        return res.json({
+            token,
+            user: {
+                id: user.id,
+                email: user.email,
+                discSpace: user.discSpace,
+                usedSpace: user.usedSpace,
+                avatar: user.avatar
+            }
+        })
     } catch (e) {
         console.log(e)
         res.send({message:'Server error'})
