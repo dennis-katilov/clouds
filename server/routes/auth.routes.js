@@ -12,7 +12,6 @@ router.post('/registration',
     ],
     async (req, res) =>{
     try {
-        console.log(req.body)
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
             return res.status(400).json({message:'Incorrect request', errors})
@@ -27,6 +26,20 @@ router.post('/registration',
         await user.save()
         return res.json({message:`User was created`})
         
+    } catch (e) {
+        console.log(e)
+        res.send({message:'Server error'})
+    }
+})
+
+router.post('/login', 
+    async (req, res) =>{
+    try {
+        const {email, password} = req.body
+        const candidate = await User.findOne({email})
+        if (!user) {
+            return res.json({message:`User not found`})
+        }
     } catch (e) {
         console.log(e)
         res.send({message:'Server error'})
