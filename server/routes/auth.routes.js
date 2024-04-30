@@ -10,7 +10,7 @@ const router = new Router()
 router.post('/registration', 
     [
         check('email', 'Incorrect email').isEmail(),
-        check('password', 'Password must be longer than 6').isLength({min:6, max:20})
+        check('password', 'Password must be longer than 4').isLength({min:4, max:20})
     ],
     async (req, res) =>{
     try {
@@ -38,13 +38,13 @@ router.post('/login',
     async (req, res) =>{
     try {
         const {email, password} = req.body
-        const candidate = await User.findOne({email})
+        const user = await User.findOne({email})
         if (!user) {
             res.status(400).json({message:`User not found`})
         }
         const isPassValid = bcrypt.compareSync(password, user.password)
         if (!isPassValid) {
-            res.status(400).json({message:`Invalid password`})
+            res.status(400).json({message:`Invalid email or password`})
         }
         const token = jwt.sign({id:user.id}, config.get("secretKey"), {expiresIn:"2h"})
         return res.json({
@@ -63,4 +63,4 @@ router.post('/login',
     }
 })
 
-module.exports = router
+module.exports = router 

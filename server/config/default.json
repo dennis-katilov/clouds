@@ -1,5 +1,5 @@
 {
     "serverPORT":5000,
     "db":"mongodb+srv://dennis:1029384756qqq!@cluster0.utubbbo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-    "secretKey": "cloud-app"
+    "secretKey": "cloudapp"
 }
